@@ -327,6 +327,13 @@ Otherwise, this project now automatically sets up Xdebug support with VS Code. I
 
 8. Open up `src/pub/index.php`, and set a breakpoint near the end of the file. Go to `Run > Debug 'magento2.test'`, and open up a web browser. Ensure the Chrome Xdebug helper is enabled by clicking on it > Debug. Navigate to your Magento store URL, and Xdebug within PHPStorm should now trigger the debugger and pause at the toggled breakpoint.
 
+9. If PHPStorm doesn't work on your first try on Ubuntu. Try adding the environment variable under the phpfpm environment section of the docker-compose.yml to match your server's name.
+
+* `phpfpm`
+    * ...
+    * `environment`
+        * PHP_IDE_CONFIG: "serverName=mysite.test"
+
 ### Linux
 
 Running Docker on Linux should be pretty straight-forward. Note that you need to run some [post install commands](https://docs.docker.com/install/linux/linux-postinstall/) as well as [installing Docker Compose](https://docs.docker.com/compose/install/). These steps are taken care of automatically with Docker Desktop, but not on Linux.
