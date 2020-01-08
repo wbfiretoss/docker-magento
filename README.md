@@ -165,6 +165,10 @@ bin/copytocontainer --all
 
 # Install composer dependencies, then copy artifacts back to the host:
 bin/composer install
+
+# If nginx.conf.sample is not in the src dir one needs to be created first or one gets created as a dir not a file and breaks the nginx container. Default file can be copied from here:
+https://github.com/markshust/docker-magento/issues/156#issuecomment-564918532
+
 bin/copyfromcontainer vendor
 
 # Import existing database:
