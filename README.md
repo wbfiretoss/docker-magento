@@ -161,18 +161,25 @@ echo "127.0.0.1 magento2.test" | sudo tee -a /etc/hosts
 
 # Copy some files to the containers and install dependencies, then restart the containers:
 docker-compose up -d
+
+# Cloud projects don't have an env.php file so you must copy one over to src dir before running bin/copytocontainer --all
+# otherwise things break.
+# If `nginx.conf.sample` is not in the src dir one needs to be created first or one gets created as a dir not a file 
+# and breaks the nginx container. Default file can be copied from here:
+https://github.com/markshust/docker-magento/issues/156#issuecomment-564918532
+
 bin/copytocontainer --all
 
 # Install composer dependencies, then copy artifacts back to the host:
 bin/composer install
 
-# If nginx.conf.sample is not in the src dir one needs to be created first or one gets created as a dir not a file and breaks the nginx container. Default file can be copied from here:
-https://github.com/markshust/docker-magento/issues/156#issuecomment-564918532
-
 bin/copyfromcontainer vendor
 
 # Import existing database:
-bin/clinotty mysql -hdb -umagento -pmagento magento < existing/magento.sql
+# this command never works just use mysql workbench to import your database.
+# Instructions to create a cloud DB dump can be cound here:
+https://github.com/wbfiretoss/How-to-dump-magento-cloud-database
+~~bin/clinotty mysql -hdb -umagento -pmagento magento < existing/magento.sql~~
 
 # Update database connection details:
 # vi src/app/etc/env.php
